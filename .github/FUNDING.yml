@@ -9,7 +9,7 @@ github:
         - name: Silver Sponsor
           description: Support us at the Silver level and receive early access to new features.
           monthly_price: 25
-    - username: another-username
+    - username: infocliq
       tiers:
         - name: Platinum Sponsor
           description: Support at the Platinum level and have your logo displayed prominently.
