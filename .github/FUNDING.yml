@@ -4,9 +4,9 @@ github:
     - infocliq
     - K-avin
 
-patreon: username
-ko-fi: username
-open_collective: organization-name
+patreon: infocliq
+ko-fi: infocliq
+open_collective: infocliq
 custom:
   - platform: custom-platform
     url: https://infocliq.net
