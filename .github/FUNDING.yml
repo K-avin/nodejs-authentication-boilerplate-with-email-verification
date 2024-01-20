@@ -1,20 +1,12 @@
 # FUNDING.yml
-github: 
+github:
   sponsors:
-    - username: K-avin
-      tiers:
-        - name: Gold Sponsor
-          description: Support us at the Gold level and get special recognition in our project.
-          monthly_price: 50
-        - name: Silver Sponsor
-          description: Support us at the Silver level and receive early access to new features.
-          monthly_price: 25
-    - username: infocliq
-      tiers:
-        - name: Platinum Sponsor
-          description: Support at the Platinum level and have your logo displayed prominently.
-          monthly_price: 100
+    - infocliq
+    - K-avin
 
-  # Other funding sources can be added here, such as Open Collective, Patreon, etc.
-  # Example:
-  patreon: your-patreon-username
+patreon: username
+ko-fi: username
+open_collective: organization-name
+custom:
+  - platform: custom-platform
+    url: https://infocliq.net
