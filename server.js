@@ -4,7 +4,7 @@ const app          = express();
 const bodyParser   = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors         = require('cors');
-const errorHandler = require('./middleware/error-handler');
+const errorHandler = require('./app/Middleware/ErrorHandler');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -14,7 +14,7 @@ app.use(cookieParser());
 app.use(cors({ origin: (origin, callback) => callback(null, true), credentials: true }));
 
 // api routes
-app.use('/api', require('./api'));
+app.use('/api', require('./routes'));
 
 // global error handler
 app.use(errorHandler);

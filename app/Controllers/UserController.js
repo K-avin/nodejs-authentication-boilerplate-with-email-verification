@@ -1,7 +1,7 @@
 ﻿const Joi             = require('joi');
-const validateRequest = require('../middleware/validate-request');
-const Role            = require('../config/role');
-const userService     = require('../services/user.service');
+const validateRequest = require('../Middleware/ValidateRequest');
+const Role            = require('../../config/role');
+const userService     = require('../Services/UserService');
 
 class UserController {
     async authenticateSchema(req, res, next) {

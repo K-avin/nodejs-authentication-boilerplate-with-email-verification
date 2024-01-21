@@ -1,8 +1,8 @@
 const express         = require('express');
 const router          = express.Router();
 const Role            = require('../../../config/role');
-const authorize       = require('../../../middleware/authorize');
-const userController  = require('../../../controllers/user.controller');
+const authorize       = require('../../../app/Middleware/Authorize');
+const userController  = require('../../../app/Controllers/UserController');
 
 router.post('/login', userController.authenticateSchema, userController.authenticate);
 router.post('/refresh-token', userController.refreshToken);

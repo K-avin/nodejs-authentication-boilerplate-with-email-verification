@@ -1,12 +1,12 @@
-﻿const config    = require('../config/config');
+﻿const config    = require('../../config/config');
 const jwt       = require('jsonwebtoken');
 const bcrypt    = require('bcryptjs');
 const crypto    = require("crypto");
 const { Op }    = require('sequelize');
-const sendEmail = require('../config/send-email');
-const Role      = require('../config/role');
+const sendEmail = require('../../config/sendEmail');
+const Role      = require('../../config/role');
 
-const { User, refreshTokens } = require('../models');
+const { User, refreshTokens } = require('../Models');
 
 class UserService {
     async authenticate({ email, password, ipAddress }) {
