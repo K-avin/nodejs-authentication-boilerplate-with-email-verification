@@ -256,8 +256,14 @@ async function sendVerificationEmail(user, origin) {
     let baseUrl;
     if (origin) { baseUrl = origin }
     else { baseUrl = config.baseUrl }
+
+    let url      = `${baseUrl}/api/v1.0/auth/verify-email?token=${user.verificationToken}`
+    let template = 'verify'
+    let subject  = 'Email Address Verification'
+    let toMail   = user.email
+    let userData = user.firstName
     
-    await mail.verificationMail(user, baseUrl);
+    await mail.mailHandler(url, template, subject, toMail, userData);
 }
 
 async function sendAlreadyRegisteredEmail(email, origin) {
@@ -265,7 +271,13 @@ async function sendAlreadyRegisteredEmail(email, origin) {
     if (origin) { baseUrl = origin }
     else { baseUrl = config.baseUrl }
     
-    await mail.alreadyRegisteredMail(email, baseUrl);
+    let url      = `${baseUrl}/api/v1.0/auth/forgot-password`
+    let template = 'forgot'
+    let subject  = 'Email Already Registered'
+    let toMail   = email
+    let userData = email
+    
+    await mail.mailHandler(url, template, subject, toMail, userData);
 }
 
 async function sendPasswordResetEmail(user, origin) {
@@ -273,5 +285,11 @@ async function sendPasswordResetEmail(user, origin) {
     if (origin) { baseUrl = origin }
     else { baseUrl = config.baseUrl }
     
-    await mail.resetPasswordMail(user, baseUrl);
+    let url      = `${baseUrl}/api/v1.0/auth/reset-password?token=${user.resetToken}`
+    let template = 'reset'
+    let subject  = 'Reset Password'
+    let toMail   = user.email
+    let userData = user.firstName
+    
+    await mail.mailHandler(url, template, subject, toMail, userData);
 }

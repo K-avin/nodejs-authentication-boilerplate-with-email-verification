@@ -18,16 +18,16 @@ const handlebarOptions = {
 
 transporter.use('compile', hbs(handlebarOptions));
 
-async function verificationMail(user, baseUrl) {
+async function mailHandler(url, template, subject, toMail, userData) {
     try {
         const mailOptions = {
             from    : config.smtpOptions.emailfrom,
-            to      : user.email,
-            subject : 'Email Address Verification',
-            template: 'verify',
+            to      : toMail,
+            subject : subject,
+            template: template,
             context : {
-                userData : user.firstName,
-                verifyUrl: `${baseUrl}/api/v1.0/auth/verify-email?token=${user.verificationToken}`,
+                userData : userData,
+                verifyUrl: url,
             }
         };
         const info = await transporter.sendMail(mailOptions);
@@ -35,38 +35,4 @@ async function verificationMail(user, baseUrl) {
     } catch (error) { throw error }
 }
 
-async function alreadyRegisteredMail(email, baseUrl) {
-    try {
-        const mailOptions = {
-            from    : config.smtpOptions.emailfrom,
-            to      : email,
-            subject : 'Email Already Registered',
-            template: 'forgot',
-            context : {
-                userData : email,
-                verifyUrl: `${baseUrl}/api/v1.0/auth/forgot-password`,
-            }
-        };
-        const info = await transporter.sendMail(mailOptions);
-        return info;
-    } catch (error) { throw error }
-}
-
-async function resetPasswordMail(user, baseUrl) {
-    try {
-        const mailOptions = {
-            from    : config.smtpOptions.emailfrom,
-            to      : user.email,
-            subject : 'Reset Password',
-            template: 'reset',
-            context : {
-                userData : user.firstName,
-                verifyUrl: `${baseUrl}/api/v1.0/auth/reset-password?token=${user.resetToken}`,
-            }
-        };
-        const info = await transporter.sendMail(mailOptions);
-        return info;
-    } catch (error) { throw error }
-}
-
-module.exports = { verificationMail, alreadyRegisteredMail, resetPasswordMail };
+module.exports = { mailHandler };
