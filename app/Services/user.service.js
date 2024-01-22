@@ -3,7 +3,7 @@ const jwt       = require('jsonwebtoken');
 const bcrypt    = require('bcryptjs');
 const crypto    = require("crypto");
 const { Op }    = require('sequelize');
-const sendEmail = require('../../config/sendEmail');
+const mail      = require('../../config/mail')
 const Role      = require('../../config/role');
 
 const { User, refreshTokens } = require('../Models');
@@ -253,57 +253,25 @@ function basicDetails(user) {
 }
 
 async function sendVerificationEmail(user, origin) {
-    let message;
-    if (origin) {
-        const verifyUrl = `${origin}/user/verify-email?token=${user.verificationToken}`;
-        message = `<p>Please click the below link to verify your email address:</p>
-                        <p><a href="${verifyUrl}">${verifyUrl}</a></p>`;
-    } else {
-        message = `<p>Please use the below token to verify your email address with the <code>/user/verify-email</code> api route:</p>
-                        <p><code>${user.verificationToken}</code></p>`;
-    }
-
-    await sendEmail({
-        to: user.email,
-        subject: 'Sign-up Verification API - Verify Email',
-        html: `<h4>Verify Email</h4>
-                    <p>Thanks for registering!</p>
-                    ${message}`
-    });
+    let baseUrl;
+    if (origin) { baseUrl = origin }
+    else { baseUrl = config.baseUrl }
+    
+    await mail.verificationMail(user, baseUrl);
 }
 
 async function sendAlreadyRegisteredEmail(email, origin) {
-    let message;
-    if (origin) {
-        message = `<p>If you don't know your password please visit the <a href="${origin}/user/forgot-password">forgot password</a> page.</p>`;
-    } else {
-        message = `<p>If you don't know your password you can reset it via the <code>/user/forgot-password</code> api route.</p>`;
-    }
-
-    await sendEmail({
-        to: email,
-        subject: 'Sign-up Verification API - Email Already Registered',
-        html: `<h4>Email Already Registered</h4>
-                    <p>Your email <strong>${email}</strong> is already registered.</p>
-                    ${message}`
-    });
+    let baseUrl;
+    if (origin) { baseUrl = origin }
+    else { baseUrl = config.baseUrl }
+    
+    await mail.alreadyRegisteredMail(email, baseUrl);
 }
 
 async function sendPasswordResetEmail(user, origin) {
-    let message;
-    if (origin) {
-        const resetUrl = `${origin}/user/reset-password?token=${user.resetToken}`;
-        message = `<p>Please click the below link to reset your password, the link will be valid for 1 day:</p>
-                        <p><a href="${resetUrl}">${resetUrl}</a></p>`;
-    } else {
-        message = `<p>Please use the below token to reset your password with the <code>/user/reset-password</code> api route:</p>
-                        <p><code>${user.resetToken}</code></p>`;
-    }
-
-    await sendEmail({
-        to: user.email,
-        subject: 'Sign-up Verification API - Reset Password',
-        html: `<h4>Reset Password Email</h4>
-                    ${message}`
-    });
+    let baseUrl;
+    if (origin) { baseUrl = origin }
+    else { baseUrl = config.baseUrl }
+    
+    await mail.resetPasswordMail(user, baseUrl);
 }
